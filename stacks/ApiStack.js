@@ -16,6 +16,7 @@ export function ApiStack({ stack, app }) {
         environment: {
           //passing in the name of our DynamoDB table
           TABLE_NAME: table.tableName,
+          STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
         },
       },
     },
@@ -30,6 +31,8 @@ export function ApiStack({ stack, app }) {
       "PUT /notes/{id}": "functions/update.main",
       // route to delete a note
       "DELETE /notes/{id}": "functions/delete.main",
+      // route for billing API (stripe)
+      "POST /billing": "functions/billing.main",
     },
   });
 
