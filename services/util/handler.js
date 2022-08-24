@@ -16,8 +16,14 @@ export default function handler(lambda) {
   
       // Return HTTP response
       return {
-        statusCode,
-        body: JSON.stringify(body),
+          statusCode,
+          body: JSON.stringify(body),
+          // Add the CORS headers in our Lambda function response (otherwise will get the error: No 'Access-Control-Allow-Origin')
+          // This ensure that if our Lambda functions are invoked through API Gateway, it’ll respond with the proper CORS config.
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+        },
       };
     };
   }
